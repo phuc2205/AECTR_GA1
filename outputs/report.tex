@@ -32,11 +32,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-\title{\Huge Group Assignment I\\[0.5em]\large Advanced Econometrics, academic year 2026--2027}
+\title{\Huge Group Assignment I\\[0.5em]\large Advanced Econometrics 2026--2027}
 \author{\large Phuc Nguyen (2779150)\\\normalsize Email: t.t.p.nguyen2@student.vu.nl\\[0.3cm]
-\large Next (xxxxxxx)\\\normalsize Email: @student.vu.nl\\[0.3cm]
-\large Next (xxxxxxx)\\\normalsize Email: @student.vu.nl\\[0.3cm]
-\large Next (xxxxxxx)\\\normalsize Email: @student.vu.nl}
+\large Tu Nguyen (2849240)\\\normalsize Email: x.nguyenanhtu@student.vu.nl\\[0.3cm]
+\large Boris de Buck (2732664)\\\normalsize Email: b.m.de.buck@student.vu.nl\\[0.3cm]
+\large Anna van Dam (2861128)\\\normalsize Email: a.l.van.dam2@student.vu.nl}
 \date{\today}
 
 
@@ -47,6 +47,90 @@
 
 
 \section*{Question 1}
+
+First write out $\sigma^2_{t+1}(\sigma_t^2, \epsilon_t)$, i.e. write the volatility equation as a function of the
+innovations.
+
+We know:
+\[x_t=\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t
+\]
+
+and by the given equation for $\sigma_t$ we know:
+\[
+\sigma_{t+1}^2=\omega+\Big(\alpha+\delta\tanh(-\gamma x_t)\Big)\left(\frac{x_t-\mu-\lambda\sigma_t^2}{\sigma_t}\right)^2+\beta\sigma_t^2.
+\]
+
+Substituting now gives us:
+\begin{align*}
+\sigma_{t+1}^2&=\omega+\Big(\alpha+\delta\tanh\big(-\gamma(\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t)\big)\Big)\left(\frac{(\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t)-\mu-\lambda\sigma_t^2}{\sigma_t}\right)^2+\beta\sigma_t^2 \\[4pt]
+&=\omega+\Big(\alpha+\delta\tanh\big(-\gamma(\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t)\big)\Big)\left(\frac{\sigma_t\varepsilon_t}{\sigma_t}\right)^2+\beta\sigma_t^2 \\[4pt]
+&=\omega+\Big(\alpha+\delta\tanh\big(-\gamma(\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t)\big)\Big)\varepsilon_t^2+\beta\sigma_t^2.
+\end{align*}
+
+We have now written $\sigma_{t+1}^2(\sigma_t, \varepsilon_t)=\omega+\Big[\alpha+\delta\tanh\big(-\gamma(\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t)\big)\Big]\varepsilon_t^2+\beta\sigma_t^2$. We want to show that $\{\sigma_t\}_{t\epsilon Z}$ is SE. We can do this by Bougerol's Theorem.
+
+\bigskip
+
+\noindent \textbf{A1} $\{\varepsilon_t\}_{t\in\mathbb{Z}}$ is SE. This holds since $\{\varepsilon_t\}\sim TID(v)$ is iid and any iid sequence is SE.
+
+\bigskip
+
+\noindent \textbf{A2} There should exist a finite initialization $\sigma_1^2$ such that $\mathbb{E}\big[\log^+|\sigma_2^2(\sigma_1^2,\varepsilon_1)|\big]<\infty$. We have:
+\begin{align*}
+\mathbb{E}\big[\log^+|\sigma_2^2(\sigma_1^2,\varepsilon_1)|\big]
+&= \mathbb{E}\Big[\log^+\Big|\omega+\big[\alpha+\delta\tanh\big(-\gamma(\mu+\lambda\sigma_1^2+\sigma_1\varepsilon_1)\big)\big]\varepsilon_1^2+\beta\sigma_1^2\Big|\Big] \\[4pt]
+&\le \mathbb{E}\Big[\Big|\omega+\big[\alpha+\delta\tanh\big(-\gamma(\mu+\lambda\sigma_1^2+\sigma_1\varepsilon_1)\big)\big]\varepsilon_1^2+\beta\sigma_1^2\Big|\Big] && (\log^+|z|\le|z|) \\[4pt]
+&\le |\omega| + \mathbb{E}\Big[\big|\alpha+\delta\tanh\big(-\gamma(\mu+\lambda\sigma_1^2+\sigma_1\varepsilon_1)\big)\big|\,\varepsilon_1^2\Big] + |\beta|\,|\sigma_1^2| &&(\text{triangle inequality}) \\[4pt]
+&\le |\omega| + \mathbb{E}\Big[\big(|\alpha|+|\delta|\,|\tanh(\cdots)|\big)\varepsilon_1^2\Big] + |\beta|\,|\sigma_1^2| &&(\text{triangle inequality}) \\[4pt]
+&\le |\omega| + \mathbb{E}\big[(|\alpha|+|\delta|)\,\varepsilon_1^2\big] + |\beta|\,|\sigma_1^2| &&(-1\le\tanh(\cdot)\le1) \\[4pt]
+&= |\omega| + (|\alpha|+|\delta|)\,\mathbb{E}[\varepsilon_1^2] + |\beta|\,|\sigma_1^2| \\[4pt]
+&< \infty.
+\end{align*}
+
+\par This is finite since $\omega,\alpha,\beta,\delta$ are finite parameters, $\mathbb{E}[\varepsilon_1^2]<\infty$ for $\varepsilon_1\sim TID(v)$ with $v>2$, and $\sigma_1^2$ is a finite initialization. So A2 holds.
+
+\bigskip
+
+\noindent \textbf{A3} The contraction holds when
+\[
+\mathbb{E}\left[\log\sup_{x\in\mathcal{X}}\left|\frac{\partial\phi(x,\varepsilon_t)}{\partial x}\right|\right]<0.
+\]
+
+\par Here $\phi(\sigma_t^2,\varepsilon_t)=\omega+\big[\alpha+\delta\tanh\big(-\gamma(\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t)\big)\big]\varepsilon_t^2+\beta\sigma_t^2$.
+ 
+\par We recall also that $\dfrac{d\tanh(x)}{dx}=1-\tanh^2(x)$.
+ 
+\par By the chain rule,
+\[
+\frac{\partial\phi(\sigma_t^2,\varepsilon_t)}{\partial\sigma_t^2}=\delta\varepsilon_t^2\Big(1-\tanh^2\big(-\gamma(\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t)\big)\Big)\cdot(-\gamma)\left(\lambda+\frac{\varepsilon_t}{2\sqrt{\sigma_t^2}}\right)+\beta.
+\]
+
+\par We then bound,
+\begin{align*}
+\left|\frac{\partial\phi(\sigma_t^2,\varepsilon_t)}{\partial\sigma_t^2}\right|
+&\le |\gamma||\delta|\,\varepsilon_t^2\,\Big|1-\tanh^2\big(-\gamma(\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t)\big)\Big|\left(|\lambda|+\frac{|\varepsilon_t|}{2\sqrt{\sigma_t^2}}\right)+|\beta| &&(\text{triangle inequality}) \\[4pt]
+&\le |\gamma||\delta|\,\varepsilon_t^2\left(|\lambda|+\frac{|\varepsilon_t|}{2\sqrt{\sigma_t^2}}\right)+|\beta| &&(0\le1-\tanh^2(\cdot)\le1) \\[4pt]
+&\le |\gamma||\delta|\,\varepsilon_t^2\left(|\lambda|+\frac{|\varepsilon_t|}{2\sqrt{\omega}}\right)+|\beta| &&(\sigma_t^2\ge\omega \;\Rightarrow\; \tfrac{1}{2\sqrt{\sigma_t^2}}\le\tfrac{1}{2\sqrt{\omega}}) \\[4pt]
+&= |\gamma|\left(|\lambda\delta|\varepsilon_t^2+\frac{|\delta||\varepsilon_t|^3}{2\sqrt{\omega}}\right)+|\beta|,
+\end{align*}
+\par where $\sigma_t^2\ge\omega$ holds for all $t$ since $\alpha>|\delta|$ and $|\tanh(\cdot)|\le1$, $\alpha+\delta\tanh(-\gamma x_{t-1})\ge\alpha-|\delta|>0$, so the middle term of the $\sigma_t^2$-recursion is non-negative and since $\beta\ge0$ so is $\beta\sigma_{t-1}^2$. Hence $\sigma_t^2\ge\omega$.
+ 
+\par Therefore,
+\[
+\mathbb{E}\left[\log\sup_{x\in\mathcal{X}}\left|\frac{\partial\phi(x,\varepsilon_t)}{\partial x}\right|\right]\le\mathbb{E}\left[\log\left(|\gamma|\left(|\lambda\delta|\varepsilon_t^2+\frac{|\delta||\varepsilon_t|^3}{2\sqrt{\omega}}\right)+|\beta|\right)\right] < 0,
+\]
+\par which is exactly the condition given in the question.
+
+
+\noindent Thus, by Bougerol's theorem, $\{\sigma_t^2\}{t\in\mathbb{Z}}$ converges to a SE process. Since $x_t=\mu+\lambda\sigma_t^2+\sigma_t\varepsilon_t$ is a measurable function of the jointly SE sequence $\{(\sigma_t,\varepsilon_t)\}{t\in\mathbb{Z}}$, in this case $\{x_t\}_{t\in\mathbb{Z}}$ is also SE by Krengel's theorem.
+
+
+
+
+
+
+
+
 
 \section*{Question 2}
 
