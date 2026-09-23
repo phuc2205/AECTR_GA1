@@ -2,7 +2,7 @@
 # Group 18:
 #   Phuc Nguyen, 2779150
 #   Tu Nguyen, 2849240
-#   Boris de Buck, xxxxxx
+#   Boris de Buck, 2732664
 #   Anna van Dam, xxxxxx
 
 import pandas as pd
