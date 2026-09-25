@@ -229,10 +229,29 @@ this conclusion in which the GARCH-M-L models have the highest log-likelihood va
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{q5_panels.png}
-    \caption{News impact curves of the three models and the filtered volatilities from the GARCH-M-L model for the four stocks.}
-    \label{fig:q5}
+    \includegraphics[width=\textwidth]{q5_panels.png}
+    \footnotesize
+    \begin{minipage}{0.85\textwidth}
+    \textbf{Figure 3: News-impact curves and filtered volatilities.} The left panels plot news-impact
+    curve $\mathrm{NIC}(x_{t-1}) = (\alpha + \delta \tanh(-\gamma x_{t-1})) x_{t-1}^2$
+    for GARCH, GARCH-M, and GARCH-M-L, using each model's estimates from Q4. The right panels plot the observed return
+    $x_t$ (grey) and GARCH-M-L filtered volatility $\hat{\sigma}_t$ (blue) over the
+    full sample; the dashed line marks January 4, 2021, the end of the in-sample
+    window. Stocks: JNJ, MRK, PFE from CRSP daily data, 2011--2023.
+    \end{minipage}
+    \label{fig:q5_panels}
 \end{figure}
+
+The GARCH-M-L news-impact curves are clearly asymmetric for all three stocks, confirming a
+leverage effect: negative shocks raise conditional volatility more than positive shocks
+of equal size, most strongly for MRK and PFE. GARCH and GARCH-M curves coincide exactly,
+since $\lambda$ does not enter the news-impact function. Consistent
+with this asymmetry, the filtered volatility for all three stocks rises sharply
+following large negative return shocks, most visibly around the COVID-19 onset in
+early 2020, while comparable positive shocks produce smaller increases
+in filtered volatility. JNJ additionally shows a stock-specific spike in 2019. The filtered
+volatility after 2021 remains within a similar range to the in-sample volatility,
+suggesting the estimated dynamics generalize reasonably well out-of-sample.
 
 \section*{Question 6}
 \begin{table}[H]
