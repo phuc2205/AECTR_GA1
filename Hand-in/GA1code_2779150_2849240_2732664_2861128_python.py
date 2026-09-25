@@ -3,7 +3,7 @@
 #   Phuc Nguyen, 2779150
 #   Tu Nguyen, 2849240
 #   Boris de Buck, 2732664
-#   Anna van Dam, xxxxxx
+#   Anna van Dam, 2861128
 
 import pandas as pd
 import numpy as np

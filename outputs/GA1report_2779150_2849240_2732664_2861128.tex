@@ -138,12 +138,24 @@ We have now written $\sigma_{t+1}^2(\sigma_t, \varepsilon_t)=\omega+\Big[\alpha+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{fig2.1.png}
-    \caption{News impact curves of the GARCH-M-L model ($\mu = \lambda = 0$, $\alpha = 0.4$, $\sigma^2_{{t-1}} = 1$)}
+    \caption{News impact curves of the GARCH-M-L model for different values of $\delta$ and $\gamma$.}
     \label{fig:fig2.1}
 \end{figure}
 
+The news impact expression is given by $\mathrm{NIC}(x_{t-1}) = (\alpha + \delta \tanh(-\gamma x_{t-1})) x_{t-1}^2$.
+Looking at \autoref{fig:fig2.1}, it can be seen that different values of $\delta$ and $\gamma$ have a significant impact on the shape of the news impact curve. 
+When $\delta > 0$, the news impact curve is asymmetric, indicating that negative shocks have a larger effect on volatility than positive shocks of equal size. And 
+$\delta < 0$ mirrors it. When $\delta \rightarrow 0$, all curves collapse to a symmetric one regardless of $\gamma$. Indeed,
+as $\delta = 0, \gamma$ is dropped, the expression reduces to $\alpha x_{t-1}^2$, which is a parabola. 
+
+\par Regarding $\gamma$, it controls how abruptly the asymmetry switches on: $\gamma = 0.01$ is almost symmetric since 
+$\tanh(x) \approx x$ for relatively small $x$. When $\gamma$ increases, the asymmetry becomes more pronounced. As $\gamma \rightarrow \infty$, the $\tanh$ function approaches a step function, 
+giving $\alpha + \delta$ for negative shocks and $\alpha - \delta$ for positive shocks.
+
+
 
 \section*{Question 3}
+
 \begin{table}[H]
     \centering
     \caption{Descriptive statistics of the daily holding period returns}
@@ -165,6 +177,16 @@ We have now written $\sigma_{t+1}^2(\sigma_t, \varepsilon_t)=\omega+\Big[\alpha+
 \end{table}
 
 
+\autoref{tab:descrp_stats} provides descriptive statistics of the daily holding period returns for Pfizer (PFE), 
+Johnson \& Johnson (JNJ), Merck \& Co. (MRK), and Apple (AAPL). The number of observations is 3270 for each stock, and 
+the mean daily return ranges from 0.041\% for PFE to 0.107\% for AAPL. In terms of volatility, AAPL has the highest standard 
+deviation while JNJ has the lowest indicating that AAPL is more volatile compared to the other stocks (e.g. JNJ), which can be observed in \autoref{fig:fig3.1}. The minimum and 
+maximum daily returns also vary across the stocks, with AAPL having the largest range of returns, from -12.865\% to 11.981\%,
+while JNJ has the smallest range, from -10.038\% to 7.998\%. The skewness and excess kurtosis values indicate that the 
+return distributions are not perfectly normal, with some stocks exhibiting left-skewed distributions (JNJ and AAPL) and 
+others right-skewed (PFE and MRK). All stocks show excess kurtosis greater than 3, suggesting that the return distributions 
+have heavier tails than a normal distribution. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{fig3.1.png}
@@ -172,7 +194,9 @@ We have now written $\sigma_{t+1}^2(\sigma_t, \varepsilon_t)=\omega+\Big[\alpha+
     \label{fig:fig3.1}
 \end{figure}
 
-
+It is also remarkable that the returns of all four stocks exhibit volatility clustering, where periods of high volatility are followed by
+periods of low volatility and vice versa. Looking at the time around the COVID-19 pandemic, we can see that there is a 
+significant fluctuation in volatility for all four stocks, which is consistent with the market-wide uncertainty and turbulence during that period.
 \section*{Question 4}
 
 \begin{table}[H]
@@ -214,13 +238,14 @@ We have now written $\sigma_{t+1}^2(\sigma_t, \varepsilon_t)=\omega+\Big[\alpha+
 \end{table}
 
 \autoref{tab:q4_estimates} shows the maximum likelihood estimates of the three volatility models 
-for PFE, JNJ, and MRK. Based on the AIC and BIC criteria, we can see that the GARCH-M-L model is the best model for all three stocks,
-followed by the GARCH-M model, and then the GARCH model. Moreover, the log-likelihood values also strengthen 
+for PFE, JNJ, and MRK. Based on the AIC and BIC criteria, we can see that the GARCH-M-L model appears to be the best model for all three stocks,
+given its lowest AIC and BIC values, followed by the GARCH-M model, and then the GARCH model. Moreover, the log-likelihood values also strengthen 
 this conclusion in which the GARCH-M-L models have the highest log-likelihood values. So, it is clear that including the mean and leverage effects improves the model's fit to the data.
 
-\bigskip
-
-
+\par Within the GARCH-M-L model, we can see that the $\delta$ parameter is positive for all three stocks, indicating that 
+negative shocks have a larger impact on volatility than positive shocks of equal size. $\hat{\gamma} \approx 4.7$ for MRK, which
+is much larger than for others, so one can expect that MRK's news impact curve will look almost kinked at zero, while the 
+other two will be more smooth.
 
 
 
@@ -368,3 +393,4 @@ suggesting the estimated dynamics generalize reasonably well out-of-sample.
 
 
 \end{document}
+
